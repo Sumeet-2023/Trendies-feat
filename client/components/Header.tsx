@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa6";
 import { MdOutlineSearch } from "react-icons/md";
 import { FiChevronDown } from "react-icons/fi";
+import Link from "next/link";
 
 export default function Topbar() {
   return (
@@ -45,9 +46,9 @@ export default function Topbar() {
         <div className="flex flex-wrap gap-6 text-sm font-medium text-gray-700">
           {["All", "Watches", "Jewellery", "Bags", "Shoes", "Accessories"].map(
             (cat) => (
-              <button key={cat} className="hover:text-black">
+              <Link href="/" key={cat} className="hover:text-black">
                 {cat}
-              </button>
+              </Link>
             )
           )}
         </div>
