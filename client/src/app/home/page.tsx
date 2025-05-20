@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 const categories = ["Accessories", "Jewels", "Bags", "Footwear", "Watches"];
 const brands = [
@@ -27,12 +28,22 @@ const brands = [
   "Cartier",
 ];
 
-const products = Array(4).fill({
-  brand: "Cartier",
-  name: "Test",
-  price: "50,000 MAD",
-  image: "https://via.placeholder.com/300x300", // Replace with actual image URLs
-});
+const products = [
+  {
+    id: "1",
+    brand: "Cartier",
+    name: "Test",
+    price: "50,000 MAD",
+    image: "https://via.placeholder.com/300x300",
+  },
+  {
+    id: "2",
+    brand: "Gucci",
+    name: "Elegant Bag",
+    price: "30,000 MAD",
+    image: "https://via.placeholder.com/300x300",
+  },
+];
 
 export default function ProductPage() {
   const [selectedSort, setSelectedSort] = useState("Featured");
@@ -109,35 +120,32 @@ export default function ProductPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product, index) => (
-              <div
-                key={index}
-                className="border rounded shadow-sm overflow-hidden hover:shadow-md transition"
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-64 object-cover bg-gray-100 cursor-pointer transition"
-                />
-                <div className="p-4">
-                  <h3 className="text-xs uppercase text-gray-500">
-                    {product.brand}
-                  </h3>
-                  <p className="font-medium">{product.name}</p>
-                  <p className="font-semibold mt-2">{product.price}</p>
+            {products.map((product) => (
+              <Link href={`/product/${product.id}`} key={product.id}>
+                <div className="border rounded shadow-sm overflow-hidden hover:shadow-md transition cursor-pointer">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-64 object-cover bg-gray-100"
+                  />
+                  <div className="p-4">
+                    <h3 className="text-xs uppercase text-gray-500">
+                      {product.brand}
+                    </h3>
+                    <p className="font-medium">{product.name}</p>
+                    <p className="font-semibold mt-2">{product.price}</p>
 
-                  <div className="flex justify-between items-center mt-4 text-sm">
-                    <Button variant="secondary" className="cursor-pointer">
-                      {" "}
-                      <Heart /> Favorites
-                    </Button>
-                    <Button className="cursor-pointer">
-                      {" "}
-                      <ShoppingBag /> Add
-                    </Button>
+                    <div className="flex justify-between items-center mt-4 text-sm">
+                      <Button variant="secondary">
+                        <Heart className="mr-2 h-4 w-4" /> Favorites
+                      </Button>
+                      <Button>
+                        <ShoppingBag className="mr-2 h-4 w-4" /> Add
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
