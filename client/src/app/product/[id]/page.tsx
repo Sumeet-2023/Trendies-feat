@@ -1,4 +1,3 @@
-"use client";
 import { use } from "react";
 import { Button } from "@/components/ui/button";
 import { Heart, ShoppingBag } from "lucide-react";
@@ -43,11 +42,7 @@ const mockProducts: Product[] = [
   },
 ];
 
-export default async function ProductDetail({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function ProductDetail({ params }: { params: { id: string } }) {
   const product = mockProducts.find((p) => p.id === params.id);
 
   if (!product) {
