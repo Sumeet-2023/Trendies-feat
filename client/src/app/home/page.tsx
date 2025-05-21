@@ -21,6 +21,7 @@ const brands = [
   "Rolex",
   "Cartier",
 ];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ProductPage() {
   const [selectedSort, setSelectedSort] = useState("Featured");
@@ -29,7 +30,7 @@ export default function ProductPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/products/featured");
+        const res = await axios.get(`${apiUrl}products/featured`);
         setProducts(res.data.data);
       } catch (err) {
         console.error("Failed to fetch products:", err);
@@ -101,7 +102,7 @@ export default function ProductPage() {
               <Link href={`/product/${product.id}`} key={product.id}>
                 <div className="border rounded shadow-sm overflow-hidden hover:shadow-md transition cursor-pointer">
                   <img
-                    src={"https://via.placeholder.com/300x300"}
+                    src={"test.jpeg"}
                     alt={product.name}
                     className="w-full h-64 object-cover bg-gray-100"
                   />

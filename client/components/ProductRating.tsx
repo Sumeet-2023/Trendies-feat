@@ -13,7 +13,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { LockKeyhole } from "lucide-react";
+import axios from "axios";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 type Rating = {
   id: number;
   comment: string;
@@ -44,20 +46,18 @@ export default function ProductRating({
   const [hasPurchased, setHasPurchased] = useState(false);
 
   const fetchRatings = () => {
-    fetch(`http://localhost:8000/ratings/product/${productId}`)
-      .then((res) => res.json())
-      .then((data) => setRatings(data))
+    axios
+      .get(`${apiUrl}ratings/product/${productId}`)
+      .then((res) => setRatings(res.data))
       .catch((err) => console.error("Failed to fetch ratings", err));
   };
 
   useEffect(() => {
     fetchRatings();
 
-    fetch(
-      `http://localhost:8000/users/${userId}/products/${productId}/purchased`
-    )
-      .then((res) => res.json())
-      .then((data) => setHasPurchased(data.hasPurchased))
+    axios
+      .get(`${apiUrl}users/${userId}/products/${productId}/purchased`)
+      .then((res) => setHasPurchased(res.data.hasPurchased))
       .catch((err) => {
         console.error("Failed to check purchase status", err);
         setHasPurchased(false);
@@ -78,19 +78,12 @@ export default function ProductRating({
 
   const handleSubmitReview = async () => {
     try {
-      await fetch(
-        `http://localhost:8000/ratings/user/${userId}/product/${productId}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId,
-            productId,
-            stars: selectedRating,
-            comment: reviewText,
-          }),
-        }
-      );
+      await axios.post(`${apiUrl}ratings/user/${userId}/product/${productId}`, {
+        userId,
+        productId,
+        stars: selectedRating,
+        comment: reviewText,
+      });
 
       setSelectedRating(0);
       setReviewText("");

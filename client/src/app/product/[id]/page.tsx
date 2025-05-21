@@ -14,6 +14,7 @@ type Product = {
   description?: string;
   image?: string;
 };
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ProductDetail() {
   const params = useParams();
@@ -22,9 +23,7 @@ export default function ProductDetail() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8000/products/${params.id}`
-        );
+        const res = await axios.get(`${apiUrl}products/${params.id}`);
         setProduct(res.data);
       } catch (err) {
         console.error("Failed to fetch product:", err);
@@ -40,7 +39,7 @@ export default function ProductDetail() {
     <main className="max-w-6xl mx-auto p-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <img
-          src={product.image || "https://via.placeholder.com/600x600"}
+          src={product.image || "test.jpeg"}
           alt={product.name}
           className="w-full h-auto object-cover rounded-lg"
         />
