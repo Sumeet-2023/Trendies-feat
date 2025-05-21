@@ -39,7 +39,7 @@ export default function ProductDetail() {
     <main className="max-w-6xl mx-auto p-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <img
-          src={product.image || "test.jpeg"}
+          src={"/test.jpeg"}
           alt={product.name}
           className="w-full h-auto object-cover rounded-lg"
         />
